@@ -1,4 +1,4 @@
-
+import PIL.Image
 import numpy as np
 import torch
 import cv2
@@ -30,8 +30,11 @@ class ReSize(object):
     def __init__(self, size=1):
         self.size = size
     def __call__(self, seq):
-        seq = scipy.misc.imresize(seq, self.size, interp='bilinear', mode=None)
-        seq = seq / 255
+        # seq = scipy.misc.imresize(seq, self.size, interp='bilinear', mode=None)
+        # seq = seq / 255
+        seq=Image.fromarray(seq)
+        size=tuple((np.array(seq.size)*self.size).astype(int))
+        seq=np.array(seq.resize(size,PIL.Image.BILINEAR))
         return seq
 
 class AddGaussian(object):

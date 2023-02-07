@@ -1,0 +1,51 @@
+02-07 17:52:24 model_name: cnn_2d
+02-07 17:52:24 data_name: CWRUSTFT
+02-07 17:52:24 data_dir: G:\classStudy\Graduation_Project\CWRU
+02-07 17:52:24 normlizetype: mean-std
+02-07 17:52:24 processing_type: R_A
+02-07 17:52:24 cuda_device: 0
+02-07 17:52:24 checkpoint_dir: ./checkpoint
+02-07 17:52:24 pretrained: True
+02-07 17:52:24 batch_size: 2
+02-07 17:52:24 num_workers: 0
+02-07 17:52:24 opt: adam
+02-07 17:52:24 lr: 0.001
+02-07 17:52:24 momentum: 0.9
+02-07 17:52:24 weight_decay: 1e-05
+02-07 17:52:24 lr_scheduler: fix
+02-07 17:52:24 gamma: 0.1
+02-07 17:52:24 steps: 9
+02-07 17:52:24 max_epoch: 2
+02-07 17:52:24 print_step: 50
+02-07 17:52:24 using 1 gpus
+02-07 17:52:45 -----Epoch 0/1-----
+02-07 17:52:45 current lr: 0.001
+02-07 17:52:52 Epoch: 0 [0/1044], Train Loss: 2.3706 Train Acc: 0.0000,0.3 examples/sec 7.24 sec/batch
+02-07 17:52:54 Epoch: 0 [100/1044], Train Loss: 2.3125 Train Acc: 0.2000,41.2 examples/sec 0.05 sec/batch
+02-07 17:52:57 Epoch: 0 [200/1044], Train Loss: 1.4065 Train Acc: 0.5100,42.0 examples/sec 0.05 sec/batch
+02-07 17:52:59 Epoch: 0 [300/1044], Train Loss: 1.1933 Train Acc: 0.5200,42.0 examples/sec 0.05 sec/batch
+02-07 17:53:01 Epoch: 0 [400/1044], Train Loss: 1.0669 Train Acc: 0.6300,42.1 examples/sec 0.05 sec/batch
+02-07 17:53:04 Epoch: 0 [500/1044], Train Loss: 0.9127 Train Acc: 0.6600,41.2 examples/sec 0.05 sec/batch
+02-07 17:53:06 Epoch: 0 [600/1044], Train Loss: 0.8134 Train Acc: 0.7100,42.1 examples/sec 0.05 sec/batch
+02-07 17:53:09 Epoch: 0 [700/1044], Train Loss: 0.8683 Train Acc: 0.6400,42.1 examples/sec 0.05 sec/batch
+02-07 17:53:11 Epoch: 0 [800/1044], Train Loss: 0.9154 Train Acc: 0.6600,42.0 examples/sec 0.05 sec/batch
+02-07 17:53:13 Epoch: 0 [900/1044], Train Loss: 0.7484 Train Acc: 0.7300,42.1 examples/sec 0.05 sec/batch
+02-07 17:53:16 Epoch: 0 [1000/1044], Train Loss: 0.7650 Train Acc: 0.7000,42.0 examples/sec 0.05 sec/batch
+02-07 17:53:17 Epoch: 0 train-Loss: 1.0972 train-Acc: 0.5929, Cost 32.1133 sec
+02-07 17:53:19 Epoch: 0 val-Loss: 0.8577 val-Acc: 0.7280, Cost 2.3343 sec
+02-07 17:53:19 save best model epoch 0, acc 0.7280
+02-07 17:53:19 -----Epoch 1/1-----
+02-07 17:53:19 current lr: 0.001
+02-07 17:53:21 Epoch: 1 [56/1044], Train Loss: 0.8381 Train Acc: 0.6600,20.7 examples/sec 0.10 sec/batch
+02-07 17:53:23 Epoch: 1 [156/1044], Train Loss: 0.5336 Train Acc: 0.7700,41.9 examples/sec 0.05 sec/batch
+02-07 17:53:25 Epoch: 1 [256/1044], Train Loss: 0.6510 Train Acc: 0.7600,41.8 examples/sec 0.05 sec/batch
+02-07 17:53:28 Epoch: 1 [356/1044], Train Loss: 0.5657 Train Acc: 0.7500,41.9 examples/sec 0.05 sec/batch
+02-07 17:53:30 Epoch: 1 [456/1044], Train Loss: 0.3417 Train Acc: 0.8900,41.8 examples/sec 0.05 sec/batch
+02-07 17:53:33 Epoch: 1 [556/1044], Train Loss: 0.5474 Train Acc: 0.8000,41.9 examples/sec 0.05 sec/batch
+02-07 17:53:35 Epoch: 1 [656/1044], Train Loss: 0.6845 Train Acc: 0.7700,41.9 examples/sec 0.05 sec/batch
+02-07 17:53:37 Epoch: 1 [756/1044], Train Loss: 0.7105 Train Acc: 0.7500,41.8 examples/sec 0.05 sec/batch
+02-07 17:53:40 Epoch: 1 [856/1044], Train Loss: 0.6993 Train Acc: 0.7500,41.7 examples/sec 0.05 sec/batch
+02-07 17:53:42 Epoch: 1 [956/1044], Train Loss: 0.5068 Train Acc: 0.8200,41.7 examples/sec 0.05 sec/batch
+02-07 17:53:44 Epoch: 1 train-Loss: 0.5799 train-Acc: 0.7893, Cost 24.9388 sec
+02-07 17:53:46 Epoch: 1 val-Loss: 0.5152 val-Acc: 0.8467, Cost 2.1407 sec
+02-07 17:53:46 save best model epoch 1, acc 0.8467
