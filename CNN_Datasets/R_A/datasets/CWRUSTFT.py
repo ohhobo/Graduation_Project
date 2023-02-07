@@ -61,14 +61,14 @@ def get_files(root, test=False):
     normalname:List of normal data
     dataname:List of failure data
     '''
-    data_root1 = os.path.join('/tmp', root, datasetname[3])
-    data_root2 = os.path.join('/tmp', root, datasetname[0])
+    data_root1 = os.path.join(root, datasetname[3])
+    data_root2 = os.path.join(root, datasetname[0])
 
-    path1 = os.path.join('/tmp', data_root1, normalname[0])  # 0->1797rpm ;1->1772rpm;2->1750rpm;3->1730rpm
+    path1 = os.path.join(data_root1, normalname[0])  # 0->1797rpm ;1->1772rpm;2->1750rpm;3->1730rpm
     data, lab = data_load(path1, axisname=normalname[0],label=0)  # nThe label for normal data is 0
 
     for i in tqdm(range(len(dataname1))):
-        path2 = os.path.join('/tmp', data_root2, dataname1[i])
+        path2 = os.path.join(data_root2, dataname1[i])
 
         data1, lab1 = data_load(path2, dataname1[i], label=label[i])
         data += data1

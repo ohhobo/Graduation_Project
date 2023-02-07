@@ -16,7 +16,7 @@ def parse_args():
 
     # basic parameters
     parser.add_argument('--model_name', type=str, default='cnn_2d', help='the name of the model')
-    parser.add_argument('--data_name', type=str, default='CWRUSlice', help='the name of the data')
+    parser.add_argument('--data_name', type=str, default='CWRUSTFT', help='the name of the data')
     parser.add_argument('--data_dir', type=str, default= "G:\classStudy\Graduation_Project\CWRU", help='the directory of the data')
     parser.add_argument('--normlizetype', type=str, choices=['0-1', '1-1', 'mean-std'], default='mean-std', help='data normalization methods')
     parser.add_argument('--processing_type', type=str, choices=['R_A', 'R_NA', 'O_A'], default='R_A',
@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument('--cuda_device', type=str, default='0', help='assign device')
     parser.add_argument('--checkpoint_dir', type=str, default='./checkpoint', help='the directory to save the model')
     parser.add_argument("--pretrained", type=bool, default=True, help='whether to load the pretrained model')
-    parser.add_argument('--batch_size', type=int, default=64, help='batchsize of the training process')
+    parser.add_argument('--batch_size', type=int, default=2, help='batchsize of the training process')
     parser.add_argument('--num_workers', type=int, default=0, help='the number of training process')
 
     # optimization information
@@ -38,8 +38,8 @@ def parse_args():
 
 
     # save, load and display information
-    parser.add_argument('--max_epoch', type=int, default=100, help='max number of epoch')
-    parser.add_argument('--print_step', type=int, default=100, help='the interval of log training information')
+    parser.add_argument('--max_epoch', type=int, default=2, help='max number of epoch')
+    parser.add_argument('--print_step', type=int, default=50, help='the interval of log training information')
     args = parser.parse_args()
     return args
 
