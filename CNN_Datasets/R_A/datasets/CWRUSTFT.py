@@ -84,9 +84,9 @@ def data_load(filename, axisname, label):
     '''
     datanumber = axisname.split(".")
     if eval(datanumber[0]) < 100:
-        realaxis = "X0" + datanumber[0] + axis[0]
+        realaxis = "X0" + datanumber[0] + axis[0]#驱动端
     else:
-        realaxis = "X" + datanumber[0] + axis[0]
+        realaxis = "X" + datanumber[0] + axis[0]#驱动端
     fl = loadmat(filename)[realaxis]
     fl = fl.reshape(-1,)
     data = []
