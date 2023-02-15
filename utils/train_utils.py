@@ -52,7 +52,7 @@ class train_utils(object):
 
         self.datasets = {}
 
-        self.datasets['train'], self.datasets['val'] = Dataset(args.data_dir,args.normlizetype).data_preprare()
+        self.datasets['train'], self.datasets['val'] = Dataset(args,args.data_dir,args.normlizetype).data_preprare()
 
         self.dataloaders = {x: torch.utils.data.DataLoader(self.datasets[x], batch_size=args.batch_size,
                                                            shuffle=(True if x == 'train' else False),

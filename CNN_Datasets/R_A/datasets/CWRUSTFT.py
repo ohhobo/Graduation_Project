@@ -48,7 +48,7 @@ dataname12 = ["112.mat", "125.mat", "138.mat", "177.mat", "192.mat", "204.mat", 
 label = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # The failure data is labeled 1-9
 axis = ["_DE_time", "_FE_time", "_BA_time"]
 
-def  STFT(fl):
+def STFT(fl):
     f, t, Zxx = signal.stft(fl, nperseg=64)
     img = np.abs(Zxx) / len(Zxx)
     return img
@@ -64,17 +64,46 @@ def get_files(root, test=False):
     data_root1 = os.path.join(root, datasetname[3])
     data_root2 = os.path.join(root, datasetname[0])
 
-    path1 = os.path.join(data_root1, normalname[0])  # 0->1797rpm ;1->1772rpm;2->1750rpm;3->1730rpm
-    data, lab = data_load(path1, axisname=normalname[0],label=0)  # nThe label for normal data is 0
+    path_1797 = os.path.join(data_root1, normalname[0])  # 0->1797rpm ;1->1772rpm;2->1750rpm;3->1730rpm
+    path_1772 = os.path.join(data_root1, normalname[1])
+    path_1750 = os.path.join(data_root1, normalname[2])
+    path_1730 = os.path.join(data_root1, normalname[3])
+
+    data_1797, lab_1797 = data_load(path_1797, axisname=normalname[0], label=0)  # nThe label for normal data is 0
+    data_1772, lab_1772 = data_load(path_1772, axisname=normalname[1], label=0)
+    data_1750, lab_1750 = data_load(path_1750, axisname=normalname[2], label=0)
+    data_1730, lab_1730 = data_load(path_1730, axisname=normalname[3], label=0)
+    data = data_1797 + data_1772 + data_1750 + data_1730
+    lab = lab_1797 + lab_1772 + lab_1750 + lab_1730
 
     for i in tqdm(range(len(dataname1))):
-        path2 = os.path.join(data_root2, dataname1[i])
+        path2_1797 = os.path.join(data_root2, dataname1[i])
 
-        data1, lab1 = data_load(path2, dataname1[i], label=label[i])
+        data1, lab1 = data_load(path2_1797, dataname1[i], label=label[i])
         data += data1
         lab += lab1
-    return [data, lab]
 
+    for i in tqdm(range(len(dataname2))):
+        path2_1772 = os.path.join(data_root2, dataname2[i])
+
+        data2, lab2 = data_load(path2_1772, dataname2[i], label=label[i])
+        data += data2
+        lab += lab2
+
+    for i in tqdm(range(len(dataname3))):
+        path2_1750 = os.path.join(data_root2, dataname3[i])
+
+        data3, lab3 = data_load(path2_1750, dataname3[i], label=label[i])
+        data += data3
+        lab += lab3
+
+    for i in tqdm(range(len(dataname4))):
+        path2_1730 = os.path.join(data_root2, dataname4[i])
+
+        data4, lab4 = data_load(path2_1730, dataname4[i], label=label[i])
+        data += data4
+        lab += lab4
+    return [data, lab]
 
 def data_load(filename, axisname, label):
     '''
@@ -125,7 +154,8 @@ class CWRUSTFT(object):
     num_classes = 10
     inputchannel = 1
 
-    def __init__(self, data_dir,normlizetype):
+    def __init__(self,args,data_dir,normlizetype):
+        self.args = args
         self.data_dir = data_dir
         self.normlizetype = normlizetype
 
@@ -137,13 +167,17 @@ class CWRUSTFT(object):
             list_data = get_files(self.data_dir, test)
             with open(os.path.join(self.data_dir, "CWRUSTFT.pkl"), 'wb') as fo:
                 pickle.dump(list_data, fo)
-        if test:
-            test_dataset = dataset(list_data=list_data, test=True, transform=None)
-            return test_dataset
-        else:
-            data_pd = pd.DataFrame({"data": list_data[0], "label": list_data[1]})
-            train_pd, val_pd = train_test_split(data_pd, test_size=0.2, random_state=40, stratify=data_pd["label"])
-            train_dataset = dataset(list_data=train_pd, transform=data_transforms('train',self.normlizetype))
-            val_dataset = dataset(list_data=val_pd, transform=data_transforms('val',self.normlizetype))
-            return train_dataset, val_dataset
-
+        if args.train_type == 'train_utils':
+            if test:
+                test_dataset = dataset(list_data=list_data, test=True, transform=None)
+                return test_dataset
+            else:
+                data_pd = pd.DataFrame({"data": list_data[0], "label": list_data[1]})
+                train_pd, val_pd = train_test_split(data_pd, test_size=0.2, random_state=40, stratify=data_pd["label"])
+                train_dataset = dataset(list_data=train_pd, transform=data_transforms('train',self.normlizetype))
+                val_dataset = dataset(list_data=val_pd, transform=data_transforms('val',self.normlizetype))
+                return train_dataset, val_dataset
+        else:#联邦学习
+            train_dataset = dataset(list_data=list_data,transform=data_transforms('train',self.normlizetype))
+            test_dataset =dataset(list_data=list_data,test=True,transform=None)
+            return train_dataset,test_dataset
