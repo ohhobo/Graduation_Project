@@ -167,7 +167,7 @@ class CWRUSTFT(object):
             list_data = get_files(self.data_dir, test)
             with open(os.path.join(self.data_dir, "CWRUSTFT.pkl"), 'wb') as fo:
                 pickle.dump(list_data, fo)
-        if args.train_type == 'train_utils':
+        if self.args.train_type == 'train_utils':
             if test:
                 test_dataset = dataset(list_data=list_data, test=True, transform=None)
                 return test_dataset
@@ -177,7 +177,11 @@ class CWRUSTFT(object):
                 train_dataset = dataset(list_data=train_pd, transform=data_transforms('train',self.normlizetype))
                 val_dataset = dataset(list_data=val_pd, transform=data_transforms('val',self.normlizetype))
                 return train_dataset, val_dataset
-        else:#联邦学习
-            train_dataset = dataset(list_data=list_data,transform=data_transforms('train',self.normlizetype))
-            test_dataset =dataset(list_data=list_data,test=True,transform=None)
+        elif self.args.train_type == 'train_federated':#联邦学习
+            data_pd = pd.DataFrame({"data": list_data[0], "label": list_data[1]})
+            train_pd, test_pd = train_test_split(data_pd, test_size=0.2, random_state=40, stratify=data_pd["label"])
+            train_dataset = dataset(list_data=train_pd,transform=data_transforms('train',self.normlizetype))
+            test_dataset = dataset(list_data=test_pd,transform=data_transforms('val',self.normlizetype))
             return train_dataset,test_dataset
+        else:#baseline
+            pass

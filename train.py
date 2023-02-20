@@ -7,6 +7,7 @@ from datetime import datetime
 from utils.logger import setlogger
 import logging
 from utils.train_utils import train_utils
+from utils.train_federated import train_federated
 
 
 args = None
@@ -47,16 +48,16 @@ def parse_args():
 
 
     #联邦学习
-    parser.add_argument('--iid', type=int, default=0,help='Default set to IID. Set to 0 for non-IID.')
+    parser.add_argument('--iid', type=int, default=1,help='Default set to IID. Set to 0 for non-IID.')
     parser.add_argument('--num_users', type=int, default=10,help="number of users: K")#客户端总数
-    parser.add_argument('--local_ep', type=int, default=100,help="the number of local epochs: E")#每个客户端的epoch
-    parser.add_argument('--local_bs', type=int, default=64,help="local batch size: B")#每个客户端的batch size
-    parser.add_argument('--train_type',type=str, choices=['train_federated','train_utils'],
-                        default='train_utils',help="the method of train")#训练方式
+    parser.add_argument('--local_ep', type=int, default=10,help="the number of local epochs: E")#每个客户端的epoch
+    parser.add_argument('--local_bs', type=int, default=8,help="local batch size: B")#每个客户端的batch size
+    parser.add_argument('--train_type',type=str, choices=['train_federated', 'train_baseline', 'train_utils'],
+                        default='train_federated',help="the method of train")#训练方式
     parser.add_argument('--num_classes', type=int, default=10, help="number of classes")#label的种类
     parser.add_argument('--stopping_rounds', type=int, default=10,help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
-    parser.add_argument('--seed', type=int, default=1, help='random seed')
+    parser.add_argument('--seed', type=int, default=1, help='random seesssd')
     parser.add_argument('--epochs', type=int, default=10,help="number of rounds of training")#全局epoch
     parser.add_argument('--frac', type=float, default=0.5,help='the fraction of clients: C')#每次使用客户端比例
 
@@ -69,7 +70,7 @@ if __name__ == '__main__':
     args = parse_args()
     os.environ['CUDA_VISIBLE_DEVICES'] = args.cuda_device.strip()
     # Prepare the saving path for the model
-    sub_dir = args.model_name+'_'+args.data_name + '_' + datetime.strftime(datetime.now(), '%m%d-%H%M%S')
+    sub_dir = args.train_type+'_'+args.model_name+'_'+args.data_name + '_' + datetime.strftime(datetime.now(), '%m%d-%H%M%S')
     save_dir = os.path.join(args.checkpoint_dir, sub_dir)
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -83,6 +84,9 @@ if __name__ == '__main__':
     if args.train_type == 'train_utils':
         trainer = train_utils(args, save_dir)
         trainer.setup()
+        trainer.train()
+    elif args.train_type == 'train_federated':
+        trainer = train_federated(args, save_dir)
         trainer.train()
     else:
         pass
