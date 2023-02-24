@@ -128,7 +128,7 @@ class train_federated(object):
         train_loss, train_accuracy = [], []
         val_acc_list, net_list = [], []
         cv_loss, cv_acc = [], []
-        print_every = 2
+        print_every = 1
         val_loss_pre, counter = 0, 0
 
         for epoch in tqdm(range(args.epochs)):
@@ -192,8 +192,8 @@ class train_federated(object):
         plt.plot(range(len(train_loss)), train_loss, color='r')
         plt.ylabel('Training loss')
         plt.xlabel('Communication Rounds')
-        plt.savefig('../checkpoint/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_loss.png'.
-                    format(args.dataset, args.model, args.epochs, args.frac,
+        plt.savefig('./checkpoint/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_loss.png'.
+                    format(args.data_name, args.model_name, args.epochs, args.frac,
                            args.iid, args.local_ep, args.local_bs))
 
         # Plot Average Accuracy vs Communication rounds
@@ -202,6 +202,6 @@ class train_federated(object):
         plt.plot(range(len(train_accuracy)), train_accuracy, color='k')
         plt.ylabel('Average Accuracy')
         plt.xlabel('Communication Rounds')
-        plt.savefig('../checkpoint/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_acc.png'.
-                    format(args.dataset, args.model, args.epochs, args.frac,
+        plt.savefig('./checkpoint/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_acc.png'.
+                    format(args.data_name, args.model_name, args.epochs, args.frac,
                            args.iid, args.local_ep, args.local_bs))
