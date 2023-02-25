@@ -52,8 +52,8 @@ def parse_args():
     parser.add_argument('--num_users', type=int, default=10,help="number of users: K")#客户端总数
     parser.add_argument('--local_ep', type=int, default=10,help="the number of local epochs: E")#每个客户端的epoch
     parser.add_argument('--local_bs', type=int, default=8,help="local batch size: B")#每个客户端的batch size
-    parser.add_argument('--train_type',type=str, choices=['train_federated', 'train_baseline', 'train_utils'],
-                        default='train_federated',help="the method of train")#训练方式
+    parser.add_argument('--train_type',type=str, choices=['train_federated', 'train_utils'],
+                        default='train_utils',help="the method of train")#训练方式
     parser.add_argument('--num_classes', type=int, default=10, help="number of classes")#label的种类
     parser.add_argument('--stopping_rounds', type=int, default=10,help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
@@ -88,8 +88,6 @@ if __name__ == '__main__':
     elif args.train_type == 'train_federated':
         trainer = train_federated(args, save_dir)
         trainer.train()
-    else:
-        pass
 
 
 

@@ -11,17 +11,9 @@ from sklearn.model_selection import train_test_split
 
 signal_size = 1024
 
-#1 Undamaged (healthy) bearings(6X)
-HBdata = ['K001',"K002",'K003','K004','K005','K006']
-label1=[0,1,2,3,4,5]  #The undamaged (healthy) bearings data is labeled 1-9
-#2 Artificially damaged bearings(12X)
-ADBdata = ['KA01','KA03','KA05','KA06','KA07','KA08','KA09','KI01','KI03','KI05','KI07','KI08']
-label2=[6,7,8,9,10,11,12,13,14,15,16,17]    #The artificially damaged bearings data is labeled 4-15
-#3 Bearings with real damages caused by accelerated lifetime tests(14x)
-# RDBdata = ['KA04','KA15','KA16','KA22','KA30','KB23','KB24','KB27','KI04','KI14','KI16','KI17','KI18','KI21']
-# label3=[18,19,20,21,22,23,24,25,26,27,28,29,30,31]  #The artificially damaged bearings data is labeled 16-29
-RDBdata = ['KA04','KA15','KA16','KA22','KA30','KB23','KB24','KB27','KI14','KI16','KI17','KI18','KI21']
-label3=[i for i in range(13)]
+Hdata = ['K001','K002','K003','K004','K005']#健康 label:0
+IRdata = ['KI14','KI17','KI21','KI16','KI18']#内圈 label:1
+ORdata = ['KA04','KA15','KA16','KA22','KA30']#外圈 label:2
 
 #working condition
 WC = ["N15_M07_F10","N09_M07_F10","N15_M01_F10","N15_M07_F04"]
@@ -41,10 +33,24 @@ def get_files(root, test=False):
     data = []
     lab = []
 
-    for k in tqdm(range(len(RDBdata))):
-        name3 = state+"_"+RDBdata[k]+"_1"
-        path3=os.path.join('/tmp',root,RDBdata[k],name3+".mat")        
-        data3, lab3= data_load(path3,name=name3,label=label3[k])
+    for k in tqdm(range(len(Hdata))):
+        name1 = state+"_"+Hdata[k]+"_1"
+        path1=os.path.join(root,Hdata[k],name1+".mat")
+        data1, lab1= data_load(path1,name=name1,label=0)
+        data +=data1
+        lab +=lab1
+
+    for k in tqdm(range(len(IRdata))):
+        name2 = state+"_"+IRdata[k]+"_1"
+        path2=os.path.join(root,IRdata[k],name2+".mat")
+        data2, lab2= data_load(path2,name=name2,label=1)
+        data +=data2
+        lab +=lab2
+
+    for k in tqdm(range(len(ORdata))):
+        name3 = state+"_"+ORdata[k]+"_1"
+        path3=os.path.join(root,ORdata[k],name3+".mat")
+        data3, lab3= data_load(path3,name=name3,label=2)
         data +=data3
         lab +=lab3
 
@@ -94,7 +100,8 @@ class PUSTFT(object):
     num_classes = 13
     inputchannel = 1
 
-    def __init__(self, data_dir,normlizetype):
+    def __init__(self, args, data_dir, normlizetype):
+        self.args = args
         self.data_dir = data_dir
         self.normlizetype = normlizetype
 
@@ -106,15 +113,22 @@ class PUSTFT(object):
             list_data = get_files(self.data_dir, test)
             with open(os.path.join(self.data_dir, "PUSTFT.pkl"), 'wb') as fo:
                 pickle.dump(list_data, fo)
-        if test:
-            test_dataset = dataset(list_data=list_data, test=True, transform=None)
-            return test_dataset
-        else:
+        if self.args.train_type == 'train_utils':
+            if test:
+                test_dataset = dataset(list_data=list_data, test=True, transform=None)
+                return test_dataset
+            else:
+                data_pd = pd.DataFrame({"data": list_data[0], "label": list_data[1]})
+                train_pd, val_pd = train_test_split(data_pd, test_size=0.2, random_state=40, stratify=data_pd["label"])
+                train_dataset = dataset(list_data=train_pd, transform=data_transforms('train',self.normlizetype))
+                val_dataset = dataset(list_data=val_pd, transform=data_transforms('val',self.normlizetype))
+                return train_dataset, val_dataset
+        elif self.args.train_type == 'train_federated':#联邦学习
             data_pd = pd.DataFrame({"data": list_data[0], "label": list_data[1]})
-            train_pd, val_pd = train_test_split(data_pd, test_size=0.2, random_state=40, stratify=data_pd["label"])
-            train_dataset = dataset(list_data=train_pd, transform=data_transforms('train',self.normlizetype))
-            val_dataset = dataset(list_data=val_pd, transform=data_transforms('val',self.normlizetype))
-            return train_dataset, val_dataset
+            train_pd, test_pd = train_test_split(data_pd, test_size=0.2, random_state=40, stratify=data_pd["label"])
+            train_dataset = dataset(list_data=train_pd,transform=data_transforms('train',self.normlizetype))
+            test_dataset = dataset(list_data=test_pd,transform=data_transforms('val',self.normlizetype))
+            return train_dataset,test_dataset
 
 
 

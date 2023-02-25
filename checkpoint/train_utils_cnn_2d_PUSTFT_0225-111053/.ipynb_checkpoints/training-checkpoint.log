@@ -1,0 +1,50 @@
+02-25 11:10:53 model_name: cnn_2d
+02-25 11:10:53 data_name: PUSTFT
+02-25 11:10:53 data_dir: ..//PU
+02-25 11:10:53 normlizetype: mean-std
+02-25 11:10:53 processing_type: R_A
+02-25 11:10:53 cuda_device: 0
+02-25 11:10:53 checkpoint_dir: ./checkpoint
+02-25 11:10:53 pretrained: True
+02-25 11:10:53 batch_size: 64
+02-25 11:10:53 num_workers: 0
+02-25 11:10:53 opt: adam
+02-25 11:10:53 lr: 0.001
+02-25 11:10:53 momentum: 0.9
+02-25 11:10:53 weight_decay: 1e-05
+02-25 11:10:53 lr_scheduler: fix
+02-25 11:10:53 gamma: 0.1
+02-25 11:10:53 steps: 9
+02-25 11:10:53 max_epoch: 100
+02-25 11:10:53 print_step: 100
+02-25 11:10:53 iid: 1
+02-25 11:10:53 num_users: 10
+02-25 11:10:53 local_ep: 10
+02-25 11:10:53 local_bs: 8
+02-25 11:10:53 train_type: train_utils
+02-25 11:10:53 num_classes: 10
+02-25 11:10:53 stopping_rounds: 10
+02-25 11:10:53 verbose: 1
+02-25 11:10:53 seed: 1
+02-25 11:10:53 epochs: 10
+02-25 11:10:53 frac: 0.5
+02-25 11:10:53 using 1 gpus
+02-25 11:11:00 -----Epoch 0/99-----
+02-25 11:11:00 current lr: 0.001
+02-25 11:11:01 Epoch: 0 [0/3004], Train Loss: 2.5212 Train Acc: 0.1562,44.4 examples/sec 1.44 sec/batch
+02-25 11:11:20 Epoch: 0 train-Loss: 1.2686 train-Acc: 0.4983, Cost 19.7609 sec
+02-25 11:11:23 Epoch: 0 val-Loss: 0.7838 val-Acc: 0.5579, Cost 3.6669 sec
+02-25 11:11:23 save best model epoch 0, acc 0.5579
+02-25 11:11:23 -----Epoch 1/99-----
+02-25 11:11:23 current lr: 0.001
+02-25 11:11:42 Epoch: 1 train-Loss: 0.6587 train-Acc: 0.6758, Cost 18.6189 sec
+02-25 11:11:46 Epoch: 1 val-Loss: 0.5647 val-Acc: 0.7324, Cost 3.5737 sec
+02-25 11:11:46 save best model epoch 1, acc 0.7324
+02-25 11:11:46 -----Epoch 2/99-----
+02-25 11:11:46 current lr: 0.001
+02-25 11:11:48 Epoch: 2 [384/3004], Train Loss: 0.9182 Train Acc: 0.6029,135.9 examples/sec 0.47 sec/batch
+02-25 11:12:04 Epoch: 2 train-Loss: 0.5241 train-Acc: 0.7593, Cost 18.5989 sec
+02-25 11:12:08 Epoch: 2 val-Loss: 0.4714 val-Acc: 0.7776, Cost 3.4721 sec
+02-25 11:12:08 save best model epoch 2, acc 0.7776
+02-25 11:12:08 -----Epoch 3/99-----
+02-25 11:12:08 current lr: 0.001
