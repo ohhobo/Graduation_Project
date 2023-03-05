@@ -41,3 +41,8 @@ class dataset(Dataset):
             seq = self.transforms(seq)
             return seq, label
 
+    def get_labels(self):
+        return self.labels
+
+    def get_data(self):
+        return self.seq_data

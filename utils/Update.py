@@ -20,12 +20,13 @@ class DatasetSplit(Dataset):
         return torch.tensor(image), torch.tensor(label)#获取image和label的数量
 
 class LocalUpdate(object):
-    def __init__(self, args, dataset, idxs):
+    def __init__(self, args, dataset, idxs, i):
         self.args = args
         #获得数据加载器
         self.trainloader, self.validloader = self.train_val_test(dataset, list(idxs))
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.criterion = nn.CrossEntropyLoss().to(self.device)
+        self.i = i
 
     def train_val_test(self, dataset, idxs):
         '''
@@ -63,8 +64,8 @@ class LocalUpdate(object):
                 optimizer.step()
 
                 if self.args.verbose and (batch_idx % 10 == 0):
-                    logging.info('| Global Round : {} | Local Epoch : {} | [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                        global_round, iter, batch_idx * len(images),
+                    logging.info('| Global Round : {} | Client : {} | Local Epoch : {} | [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                        global_round, self.i, iter, batch_idx * len(images),
                         len(self.trainloader.dataset),
                                             100. * batch_idx / len(self.trainloader), loss.item()))
                 batch_loss.append(loss.item())

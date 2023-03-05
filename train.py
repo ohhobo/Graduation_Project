@@ -17,8 +17,8 @@ def parse_args():
 
     # basic parameters
     parser.add_argument('--model_name', type=str, default='cnn_2d', help='the name of the model')
-    parser.add_argument('--data_name', type=str, default='CWRUSTFT', help='the name of the data')
-    parser.add_argument('--data_dir', type=str, default= "..//CWRU", help='the directory of the data')
+    parser.add_argument('--data_name', type=str, default='PUSTFT', help='the name of the data')
+    parser.add_argument('--data_dir', type=str, default= "..//PU", help='the directory of the data')
     parser.add_argument('--normlizetype', type=str, choices=['0-1', '1-1', 'mean-std'],
                         default='mean-std', help='data normalization methods')
     parser.add_argument('--processing_type', type=str, choices=['R_A', 'R_NA', 'O_A'], default='R_A',
@@ -48,13 +48,13 @@ def parse_args():
 
 
     #联邦学习
-    parser.add_argument('--iid', type=int, default=1,help='Default set to IID. Set to 0 for non-IID.')
+    parser.add_argument('--iid', type=int, default=0,help='Default set to IID. Set to 0 for non-IID.')
     parser.add_argument('--num_users', type=int, default=10,help="number of users: K")#客户端总数
     parser.add_argument('--local_ep', type=int, default=10,help="the number of local epochs: E")#每个客户端的epoch
     parser.add_argument('--local_bs', type=int, default=8,help="local batch size: B")#每个客户端的batch size
     parser.add_argument('--train_type',type=str, choices=['train_federated', 'train_utils'],
-                        default='train_utils',help="the method of train")#训练方式
-    parser.add_argument('--num_classes', type=int, default=10, help="number of classes")#label的种类
+                        default='train_federated',help="the method of train")#训练方式
+    parser.add_argument('--num_classes', type=int, default=3, help="number of classes")#label的种类
     parser.add_argument('--stopping_rounds', type=int, default=10,help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
     parser.add_argument('--seed', type=int, default=1, help='random seesssd')

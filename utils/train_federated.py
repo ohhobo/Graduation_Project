@@ -24,30 +24,59 @@ def iid(dataset, num_users):
         all_idxs = list(set(all_idxs) - dict_users[i])
     return dict_users
 
-def non_iid(dataset,num_users):
-    '''
-    将数据集划分为非独立同分布
-    '''
-    num_shards, num_imgs = 20, len(dataset)/20
-    idx_shard = [i for i in range(num_shards)]#生成一个递增list
-    dict_users = {i: np.array([]) for i in range(num_users)}#以大括号生成用户的字典
-    idxs = np.arange(num_shards*num_imgs)
-    labels = dataset.train_labels.numpy()
+def non_iid(dataset,num_users,num_classes):
+    labels = dataset.get_labels()
+    labels = np.array(labels)
+    #得到labels*clients的标签矩阵
+    label_distribution = np.random.dirichlet([1.0]*num_users, num_classes)
+    class_idxs = [np.argwhere(labels == y).flatten() for y in range(num_classes)]
+    # 定义一个空列表作最后的返回值
+    client_idxs = [[] for _ in range(num_users)]
+    # 记录N个client分别对应样本集合的索引
+    for c, fracs in zip(class_idxs, label_distribution):
+        # np.split按照比例将类别为k的样本划分为了N个子集
+        # for i, idcs 为遍历第i个client对应样本集合的索引
+        for i, idxs in enumerate(np.split(c, (np.cumsum(fracs)[:-1]*len(c)).astype(int))):
+            client_idxs[i] += [idxs]
 
-    # sort labels
-    idxs_labels = np.vstack((idxs, labels))#把编号和标签堆叠在一起形成一个的数组
-    idxs_labels = idxs_labels[:, idxs_labels[1, :].argsort()]#argsort输出数组中的元素从小到大排序后的索引数组值
-    # 经过筛选后获得了由小到大的label索引，然后进行用户切片
-    idxs = idxs_labels[0, :]#编号
-
-    # divide and assign 2 shards/client
+    client_idxs = [np.concatenate(idxs) for idxs in client_idxs]
+    dict_users = {}
     for i in range(num_users):
-        rand_set = set(np.random.choice(idx_shard, 2, replace=False))#从切片序号中选出两个序号，不放回取样
-        idx_shard = list(set(idx_shard) - rand_set)
-        for rand in rand_set:
-            dict_users[i] = np.concatenate(#从哪个维度拼哪个维度就会增加，这里从200个索引号中随机选取了两个随机数，把这两个随机数对应位置的数据给连起来了
-                (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)#取连续的300个排序后的索引号，axis=0为行的增加（列向求平均）
-    return dict_users#最后返回每个用户以及对应的600个数据的字典,按顺序排列的,所以是非独立同分布
+        dict_users[i] = set(client_idxs[i])
+    return dict_users
+
+
+# def non_iid_no(dataset,num_users):
+#     '''
+#     将数据集划分为非独立同分布
+#     '''
+#     num_items = int(len(dataset) / num_users) # 每个节点的图片总数
+#     num_labels = 2  # 每个节点只包含两类图片
+#     num_pics = int(num_items / num_labels) # 每个客户端每类所包含的图片总数
+#     dict_users, idxs, per_labal_idxs = {}, [i for i in range(10)], {}
+#     labels = dataset.get_labels()
+#     for i in range(10):
+#         per_labal_idxs[i] = []
+#     for i in range(10):#类别
+#         for j in range(len(labels)):#索引
+#             if(labels[j] == i):
+#                 per_labal_idxs[i].append(j)
+#     # for i in range(10):
+#     #     per_labal_idxs[i] = [i for i in range(i * num_items,(i+1) * num_items)]
+#     for i in range(num_users):
+#         random_labels = np.random.choice(idxs, 2 ,replace=False)#随机选两个label
+#         random_label_1 = set(np.random.choice(per_labal_idxs[random_labels[0]], num_pics, replace=False))
+#         per_labal_idxs[random_labels[0]] = list(set(per_labal_idxs[random_labels[0]])-random_label_1)
+#         if(len(per_labal_idxs[random_labels[0]]) == 0):
+#             idxs.remove(random_labels[0])
+#         random_label_2 = set(np.random.choice(per_labal_idxs[random_labels[1]], num_pics, replace=False))
+#         per_labal_idxs[random_labels[1]] = list(set(per_labal_idxs[random_labels[1]]) - random_label_2)
+#         if(len(per_labal_idxs[random_labels[1]]) == 0):
+#             idxs.remove(random_labels[1])
+#         dict_users[i] = set.union(random_label_1, random_label_2)
+#
+#     return dict_users
+
 
 def get_dataset(args):
     '''
@@ -69,7 +98,7 @@ def get_dataset(args):
     if args.iid:
         user_groups=iid(train_dataset,args.num_users)
     else:
-        user_groups=non_iid(train_dataset,args.num_users)
+        user_groups=non_iid(train_dataset,args.num_users,args.num_classes)
     return train_dataset, test_dataset, user_groups
 
 #返回权重的平均值，即执行联邦平均算法
@@ -143,7 +172,7 @@ class train_federated(object):
             LocalUpdate还没写
             '''
             for idx in idxs_users:
-                local_model = LocalUpdate(args=args, dataset=train_dataset, idxs=user_groups[idx])
+                local_model = LocalUpdate(args=args, dataset=train_dataset, idxs=user_groups[idx], i=idx)
                 w,loss = local_model.update_weights(model=copy.deepcopy(global_model), global_round=epoch)
                 local_weights.append(copy.deepcopy(w))
                 local_losses.append(copy.deepcopy(loss))
@@ -159,7 +188,7 @@ class train_federated(object):
             list_acc, list_loss = [], []
             global_model.eval()
             for c in range(args.num_users):
-                local_model = LocalUpdate(args=args, dataset=train_dataset,idxs=user_groups[idx])
+                local_model = LocalUpdate(args=args, dataset=train_dataset,idxs=user_groups[idx],i=c)
                 acc, loss = local_model.inference(model=global_model)
                 list_acc.append(acc)
                 list_loss.append(loss)
