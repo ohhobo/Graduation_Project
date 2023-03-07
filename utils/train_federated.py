@@ -140,7 +140,10 @@ class train_federated(object):
 
         # Define the model
         if args.model_name == 'cnn_2d':
-            global_model = CNN()
+            if args.data_name == 'CWRUSTFT':
+                global_model = CNN()
+            elif args.data_name == 'PUSTFT':
+                global_model =CNN(out_channel=3)
         else:
             exit('Error: unrecognized model')
         #数据集

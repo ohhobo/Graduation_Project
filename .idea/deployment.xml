@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="root@region-11.autodl.com:23329" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="root@region-8.seetacloud.com:24832 (2)" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="root@region-11.autodl.com:23329">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/autodl-tmp/Graduation_Project/Project" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@region-8.seetacloud.com:24832">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/autodl-tmp/Graduation_Project/Project" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@region-8.seetacloud.com:24832 (2)">
         <serverdata>
           <mappings>
             <mapping deploy="/root/autodl-tmp/Graduation_Project/Project" local="$PROJECT_DIR$" />

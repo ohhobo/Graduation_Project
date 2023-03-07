@@ -58,7 +58,7 @@ def parse_args():
     parser.add_argument('--stopping_rounds', type=int, default=10,help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
     parser.add_argument('--seed', type=int, default=1, help='random seesssd')
-    parser.add_argument('--epochs', type=int, default=10,help="number of rounds of training")#全局epoch
+    parser.add_argument('--epochs', type=int, default=50,help="number of rounds of training")#全局epoch
     parser.add_argument('--frac', type=float, default=0.5,help='the fraction of clients: C')#每次使用客户端比例
 
     args = parser.parse_args()
