@@ -28,7 +28,7 @@ def non_iid(dataset,num_users,num_classes):
     labels = dataset.get_labels()
     labels = np.array(labels)
     #得到labels*clients的标签矩阵
-    label_distribution = np.random.dirichlet([1.0]*num_users, num_classes)
+    label_distribution = np.random.dirichlet([1.0]*num_users, num_classes)#alpha值越小异质性越强
     class_idxs = [np.argwhere(labels == y).flatten() for y in range(num_classes)]
     # 定义一个空列表作最后的返回值
     client_idxs = [[] for _ in range(num_users)]
@@ -210,8 +210,13 @@ class train_federated(object):
         logging.info(f' \n Results after {args.epochs} global rounds of training:')
         logging.info("|---- Avg Train Accuracy: {:.2f}%".format(100*train_accuracy[-1]))
         logging.info("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
-
         logging.info('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
+
+        final_model=global_model.state_dict()
+        torch.save(final_model, os.path.join(self.save_dir,
+                'fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_final_model.pth'.
+                format(args.data_name, args.model_name, args.epochs, args.frac,
+                       args.iid, args.local_ep, args.local_bs)))
 
         # PLOTTING (optional)
         import matplotlib
@@ -224,8 +229,8 @@ class train_federated(object):
         plt.plot(range(len(train_loss)), train_loss, color='r')
         plt.ylabel('Training loss')
         plt.xlabel('Communication Rounds')
-        plt.savefig('./checkpoint/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_loss.png'.
-                    format(args.data_name, args.model_name, args.epochs, args.frac,
+        plt.savefig('{}/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_loss.png'.
+                    format(self.save_dir,args.data_name, args.model_name, args.epochs, args.frac,
                            args.iid, args.local_ep, args.local_bs))
 
         # Plot Average Accuracy vs Communication rounds
@@ -234,6 +239,6 @@ class train_federated(object):
         plt.plot(range(len(train_accuracy)), train_accuracy, color='k')
         plt.ylabel('Average Accuracy')
         plt.xlabel('Communication Rounds')
-        plt.savefig('./checkpoint/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_acc.png'.
-                    format(args.data_name, args.model_name, args.epochs, args.frac,
+        plt.savefig('{}/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_acc.png'.
+                    format(self.save_dir,args.data_name, args.model_name, args.epochs, args.frac,
                            args.iid, args.local_ep, args.local_bs))
