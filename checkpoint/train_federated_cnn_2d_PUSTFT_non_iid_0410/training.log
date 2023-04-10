@@ -1,0 +1,34 @@
+04-10 10:44:22 model_name: cnn_2d
+04-10 10:44:22 data_name: PUSTFT
+04-10 10:44:22 data_dir: ..//PU
+04-10 10:44:22 normlizetype: mean-std
+04-10 10:44:22 processing_type: R_A
+04-10 10:44:22 cuda_device: 0
+04-10 10:44:22 checkpoint_dir: ./checkpoint
+04-10 10:44:22 pretrained: True
+04-10 10:44:22 batch_size: 64
+04-10 10:44:22 num_workers: 0
+04-10 10:44:22 opt: adam
+04-10 10:44:22 lr: 0.001
+04-10 10:44:22 momentum: 0.9
+04-10 10:44:22 weight_decay: 1e-05
+04-10 10:44:22 lr_scheduler: fix
+04-10 10:44:22 gamma: 0.1
+04-10 10:44:22 steps: 9
+04-10 10:44:22 max_epoch: 100
+04-10 10:44:22 print_step: 100
+04-10 10:44:22 iid: 0
+04-10 10:44:22 num_users: 10
+04-10 10:44:22 local_ep: 10
+04-10 10:44:22 local_bs: 8
+04-10 10:44:22 train_type: train_federated
+04-10 10:44:22 num_classes: 3
+04-10 10:44:22 stopping_rounds: 10
+04-10 10:44:22 verbose: 1
+04-10 10:44:22 seed: 42
+04-10 10:44:22 epochs: 100
+04-10 10:44:22 frac: 0.5
+04-10 10:44:22 using 1 gpus
+04-10 10:44:41 
+ | Global Training Round : 1 |
+

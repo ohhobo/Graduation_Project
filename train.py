@@ -48,7 +48,7 @@ def parse_args():
 
 
     #联邦学习
-    parser.add_argument('--iid', type=int, default=1,help='Default set to IID. Set to 0 for non-IID.')
+    parser.add_argument('--iid', type=int, default=0,help='Default set to IID. Set to 0 for non-IID.')
     parser.add_argument('--num_users', type=int, default=10,help="number of users: K")#客户端总数
     parser.add_argument('--local_ep', type=int, default=10,help="the number of local epochs: E")#每个客户端的epoch
     parser.add_argument('--local_bs', type=int, default=8,help="local batch size: B")#每个客户端的batch size
@@ -57,8 +57,8 @@ def parse_args():
     parser.add_argument('--num_classes', type=int, default=10, help="number of classes")#label的种类
     parser.add_argument('--stopping_rounds', type=int, default=10,help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
-    parser.add_argument('--seed', type=int, default=1, help='random seesssd')
-    parser.add_argument('--epochs', type=int, default=1,help="number of rounds of training")#全局epoch
+    parser.add_argument('--seed', type=int, default=42, help='random seesssd')
+    parser.add_argument('--epochs', type=int, default=100,help="number of rounds of training")#全局epoch
     parser.add_argument('--frac', type=float, default=0.5,help='the fraction of clients: C')#每次使用客户端比例
 
     args = parser.parse_args()

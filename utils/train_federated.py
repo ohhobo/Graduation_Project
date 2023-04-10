@@ -11,6 +11,9 @@ from models.CNN_2d import CNN
 from utils.Update import LocalUpdate,test_inference
 from tqdm import tqdm
 import copy
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl.use('Agg')
 
 def iid(dataset, num_users):
     '''
@@ -24,7 +27,7 @@ def iid(dataset, num_users):
         all_idxs = list(set(all_idxs) - dict_users[i])
     return dict_users
 
-def non_iid(dataset,num_users,num_classes):
+def non_iid(dataset,num_users,num_classes,save_dir):
     labels = dataset.get_labels()
     labels = np.array(labels)
     #得到labels*clients的标签矩阵
@@ -40,45 +43,19 @@ def non_iid(dataset,num_users,num_classes):
             client_idxs[i] += [idxs]
 
     client_idxs = [np.concatenate(idxs) for idxs in client_idxs]
+    plt.figure()
+    plt.hist([labels[idxs] for idxs in client_idxs],stacked=True,
+             bins=np.arange(min(labels)-0.5,max(labels)+1.5,1),
+             label=["Client {}".format(i) for i in range(num_users)],rwidth=0.4)
+    plt.legend(bbox_to_anchor=(1,0), loc=3)
+    plt.xticks(np.arange(num_classes),[i for i in range(num_classes)])
+    plt.savefig('{}/Partition.png'.format(save_dir),bbox_inches='tight')
     dict_users = {}
     for i in range(num_users):
         dict_users[i] = set(client_idxs[i])
     return dict_users
 
-
-# def non_iid_no(dataset,num_users):
-#     '''
-#     将数据集划分为非独立同分布
-#     '''
-#     num_items = int(len(dataset) / num_users) # 每个节点的图片总数
-#     num_labels = 2  # 每个节点只包含两类图片
-#     num_pics = int(num_items / num_labels) # 每个客户端每类所包含的图片总数
-#     dict_users, idxs, per_labal_idxs = {}, [i for i in range(10)], {}
-#     labels = dataset.get_labels()
-#     for i in range(10):
-#         per_labal_idxs[i] = []
-#     for i in range(10):#类别
-#         for j in range(len(labels)):#索引
-#             if(labels[j] == i):
-#                 per_labal_idxs[i].append(j)
-#     # for i in range(10):
-#     #     per_labal_idxs[i] = [i for i in range(i * num_items,(i+1) * num_items)]
-#     for i in range(num_users):
-#         random_labels = np.random.choice(idxs, 2 ,replace=False)#随机选两个label
-#         random_label_1 = set(np.random.choice(per_labal_idxs[random_labels[0]], num_pics, replace=False))
-#         per_labal_idxs[random_labels[0]] = list(set(per_labal_idxs[random_labels[0]])-random_label_1)
-#         if(len(per_labal_idxs[random_labels[0]]) == 0):
-#             idxs.remove(random_labels[0])
-#         random_label_2 = set(np.random.choice(per_labal_idxs[random_labels[1]], num_pics, replace=False))
-#         per_labal_idxs[random_labels[1]] = list(set(per_labal_idxs[random_labels[1]]) - random_label_2)
-#         if(len(per_labal_idxs[random_labels[1]]) == 0):
-#             idxs.remove(random_labels[1])
-#         dict_users[i] = set.union(random_label_1, random_label_2)
-#
-#     return dict_users
-
-
-def get_dataset(args):
+def get_dataset(args, save_dir):
     '''
     加载数据集
     '''
@@ -98,7 +75,7 @@ def get_dataset(args):
     if args.iid:
         user_groups=iid(train_dataset,args.num_users)
     else:
-        user_groups=non_iid(train_dataset,args.num_users,args.num_classes)
+        user_groups=non_iid(train_dataset,args.num_users,args.num_classes,save_dir)
     return train_dataset, test_dataset, user_groups
 
 #返回权重的平均值，即执行联邦平均算法
@@ -147,7 +124,7 @@ class train_federated(object):
         else:
             exit('Error: unrecognized model')
         #数据集
-        train_dataset, test_dataset, user_groups = get_dataset(args)
+        train_dataset, test_dataset, user_groups = get_dataset(args,self.save_dir)
         # Set the model to train and send it to device.
         global_model.to(self.device)
         global_model.train()

@@ -1,0 +1,97 @@
+04-09 20:52:55 model_name: cnn_2d
+04-09 20:52:55 data_name: PUSTFT
+04-09 20:52:55 data_dir: ..//PU
+04-09 20:52:55 normlizetype: mean-std
+04-09 20:52:55 processing_type: R_A
+04-09 20:52:55 cuda_device: 0
+04-09 20:52:55 checkpoint_dir: ./checkpoint
+04-09 20:52:55 pretrained: True
+04-09 20:52:55 batch_size: 64
+04-09 20:52:55 num_workers: 0
+04-09 20:52:55 opt: adam
+04-09 20:52:55 lr: 0.001
+04-09 20:52:55 momentum: 0.9
+04-09 20:52:55 weight_decay: 1e-05
+04-09 20:52:55 lr_scheduler: fix
+04-09 20:52:55 gamma: 0.1
+04-09 20:52:55 steps: 9
+04-09 20:52:55 max_epoch: 100
+04-09 20:52:55 print_step: 100
+04-09 20:52:55 iid: 0
+04-09 20:52:55 num_users: 10
+04-09 20:52:55 local_ep: 10
+04-09 20:52:55 local_bs: 8
+04-09 20:52:55 train_type: train_federated
+04-09 20:52:55 num_classes: 3
+04-09 20:52:55 stopping_rounds: 10
+04-09 20:52:55 verbose: 1
+04-09 20:52:55 seed: 42
+04-09 20:52:55 epochs: 100
+04-09 20:52:55 frac: 0.5
+04-09 20:52:55 using 1 gpus
+04-09 20:53:01 
+ | Global Training Round : 1 |
+
+04-09 20:53:03 | Global Round : 0 | Client : 4 | Local Epoch : 0 | [0/68 (0%)]	Loss: 1.052234
+04-09 20:53:04 | Global Round : 0 | Client : 4 | Local Epoch : 1 | [0/68 (0%)]	Loss: 2.252135
+04-09 20:53:05 | Global Round : 0 | Client : 4 | Local Epoch : 2 | [0/68 (0%)]	Loss: 1.446178
+04-09 20:53:07 | Global Round : 0 | Client : 4 | Local Epoch : 3 | [0/68 (0%)]	Loss: 0.708931
+04-09 20:53:08 | Global Round : 0 | Client : 4 | Local Epoch : 4 | [0/68 (0%)]	Loss: 0.371337
+04-09 20:53:10 | Global Round : 0 | Client : 4 | Local Epoch : 5 | [0/68 (0%)]	Loss: 0.453966
+04-09 20:53:12 | Global Round : 0 | Client : 4 | Local Epoch : 6 | [0/68 (0%)]	Loss: 0.947362
+04-09 20:53:13 | Global Round : 0 | Client : 4 | Local Epoch : 7 | [0/68 (0%)]	Loss: 0.448500
+04-09 20:53:15 | Global Round : 0 | Client : 4 | Local Epoch : 8 | [0/68 (0%)]	Loss: 0.465401
+04-09 20:53:16 | Global Round : 0 | Client : 4 | Local Epoch : 9 | [0/68 (0%)]	Loss: 0.204926
+04-09 20:53:18 | Global Round : 0 | Client : 8 | Local Epoch : 0 | [0/111 (0%)]	Loss: 1.095378
+04-09 20:53:19 | Global Round : 0 | Client : 8 | Local Epoch : 0 | [80/111 (71%)]	Loss: 0.881297
+04-09 20:53:20 | Global Round : 0 | Client : 8 | Local Epoch : 1 | [0/111 (0%)]	Loss: 0.750608
+04-09 20:53:22 | Global Round : 0 | Client : 8 | Local Epoch : 1 | [80/111 (71%)]	Loss: 0.759353
+04-09 20:53:23 | Global Round : 0 | Client : 8 | Local Epoch : 2 | [0/111 (0%)]	Loss: 1.042024
+04-09 20:53:25 | Global Round : 0 | Client : 8 | Local Epoch : 2 | [80/111 (71%)]	Loss: 0.764038
+04-09 20:53:26 | Global Round : 0 | Client : 8 | Local Epoch : 3 | [0/111 (0%)]	Loss: 0.795541
+04-09 20:53:27 | Global Round : 0 | Client : 8 | Local Epoch : 3 | [80/111 (71%)]	Loss: 0.620594
+04-09 20:53:28 | Global Round : 0 | Client : 8 | Local Epoch : 4 | [0/111 (0%)]	Loss: 1.024058
+04-09 20:53:30 | Global Round : 0 | Client : 8 | Local Epoch : 4 | [80/111 (71%)]	Loss: 0.893344
+04-09 20:53:31 | Global Round : 0 | Client : 8 | Local Epoch : 5 | [0/111 (0%)]	Loss: 0.722689
+04-09 20:53:33 | Global Round : 0 | Client : 8 | Local Epoch : 5 | [80/111 (71%)]	Loss: 0.583638
+04-09 20:53:33 | Global Round : 0 | Client : 8 | Local Epoch : 6 | [0/111 (0%)]	Loss: 0.816165
+04-09 20:53:35 | Global Round : 0 | Client : 8 | Local Epoch : 6 | [80/111 (71%)]	Loss: 0.617456
+04-09 20:53:36 | Global Round : 0 | Client : 8 | Local Epoch : 7 | [0/111 (0%)]	Loss: 0.418068
+04-09 20:53:38 | Global Round : 0 | Client : 8 | Local Epoch : 7 | [80/111 (71%)]	Loss: 0.677026
+04-09 20:53:38 | Global Round : 0 | Client : 8 | Local Epoch : 8 | [0/111 (0%)]	Loss: 0.393908
+04-09 20:53:40 | Global Round : 0 | Client : 8 | Local Epoch : 8 | [80/111 (71%)]	Loss: 0.543830
+04-09 20:53:41 | Global Round : 0 | Client : 8 | Local Epoch : 9 | [0/111 (0%)]	Loss: 0.490277
+04-09 20:53:43 | Global Round : 0 | Client : 8 | Local Epoch : 9 | [80/111 (71%)]	Loss: 0.545354
+04-09 20:53:44 | Global Round : 0 | Client : 7 | Local Epoch : 0 | [0/205 (0%)]	Loss: 1.239991
+04-09 20:53:45 | Global Round : 0 | Client : 7 | Local Epoch : 0 | [80/205 (38%)]	Loss: 2.480145
+04-09 20:53:47 | Global Round : 0 | Client : 7 | Local Epoch : 0 | [160/205 (77%)]	Loss: 0.439873
+04-09 20:53:48 | Global Round : 0 | Client : 7 | Local Epoch : 1 | [0/205 (0%)]	Loss: 0.337367
+04-09 20:53:50 | Global Round : 0 | Client : 7 | Local Epoch : 1 | [80/205 (38%)]	Loss: 0.554881
+04-09 20:53:52 | Global Round : 0 | Client : 7 | Local Epoch : 1 | [160/205 (77%)]	Loss: 0.530148
+04-09 20:53:53 | Global Round : 0 | Client : 7 | Local Epoch : 2 | [0/205 (0%)]	Loss: 0.835004
+04-09 20:53:54 | Global Round : 0 | Client : 7 | Local Epoch : 2 | [80/205 (38%)]	Loss: 0.089509
+04-09 20:53:56 | Global Round : 0 | Client : 7 | Local Epoch : 2 | [160/205 (77%)]	Loss: 0.908187
+04-09 20:53:57 | Global Round : 0 | Client : 7 | Local Epoch : 3 | [0/205 (0%)]	Loss: 0.473031
+04-09 20:53:58 | Global Round : 0 | Client : 7 | Local Epoch : 3 | [80/205 (38%)]	Loss: 0.080872
+04-09 20:54:00 | Global Round : 0 | Client : 7 | Local Epoch : 3 | [160/205 (77%)]	Loss: 0.766169
+04-09 20:54:01 | Global Round : 0 | Client : 7 | Local Epoch : 4 | [0/205 (0%)]	Loss: 0.544301
+04-09 20:54:03 | Global Round : 0 | Client : 7 | Local Epoch : 4 | [80/205 (38%)]	Loss: 0.516693
+04-09 20:54:05 | Global Round : 0 | Client : 7 | Local Epoch : 4 | [160/205 (77%)]	Loss: 0.352374
+04-09 20:54:06 | Global Round : 0 | Client : 7 | Local Epoch : 5 | [0/205 (0%)]	Loss: 0.280358
+04-09 20:54:08 | Global Round : 0 | Client : 7 | Local Epoch : 5 | [80/205 (38%)]	Loss: 1.350026
+04-09 20:54:10 | Global Round : 0 | Client : 7 | Local Epoch : 5 | [160/205 (77%)]	Loss: 0.405175
+04-09 20:54:11 | Global Round : 0 | Client : 7 | Local Epoch : 6 | [0/205 (0%)]	Loss: 0.272675
+04-09 20:54:13 | Global Round : 0 | Client : 7 | Local Epoch : 6 | [80/205 (38%)]	Loss: 0.249424
+04-09 20:54:15 | Global Round : 0 | Client : 7 | Local Epoch : 6 | [160/205 (77%)]	Loss: 0.196204
+04-09 20:54:16 | Global Round : 0 | Client : 7 | Local Epoch : 7 | [0/205 (0%)]	Loss: 0.113306
+04-09 20:54:17 | Global Round : 0 | Client : 7 | Local Epoch : 7 | [80/205 (38%)]	Loss: 0.441154
+04-09 20:54:19 | Global Round : 0 | Client : 7 | Local Epoch : 7 | [160/205 (77%)]	Loss: 0.145741
+04-09 20:54:20 | Global Round : 0 | Client : 7 | Local Epoch : 8 | [0/205 (0%)]	Loss: 0.165069
+04-09 20:54:22 | Global Round : 0 | Client : 7 | Local Epoch : 8 | [80/205 (38%)]	Loss: 0.075142
+04-09 20:54:23 | Global Round : 0 | Client : 7 | Local Epoch : 8 | [160/205 (77%)]	Loss: 0.384061
+04-09 20:54:24 | Global Round : 0 | Client : 7 | Local Epoch : 9 | [0/205 (0%)]	Loss: 0.107098
+04-09 20:54:25 | Global Round : 0 | Client : 7 | Local Epoch : 9 | [80/205 (38%)]	Loss: 0.247922
+04-09 20:54:27 | Global Round : 0 | Client : 7 | Local Epoch : 9 | [160/205 (77%)]	Loss: 0.297798
+04-09 20:54:28 | Global Round : 0 | Client : 6 | Local Epoch : 0 | [0/283 (0%)]	Loss: 1.009750
+04-09 20:54:30 | Global Round : 0 | Client : 6 | Local Epoch : 0 | [80/283 (28%)]	Loss: 1.002950
+04-09 20:54:32 | Global Round : 0 | Client : 6 | Local Epoch : 0 | [160/283 (56%)]	Loss: 0.722463
